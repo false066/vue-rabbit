@@ -1,5 +1,17 @@
 <script setup>
+import { getCategoryAPI } from '@/apis/layout'
+import { onMounted,ref } from 'vue';
+const CategoryList = ref([])
+const getCategory = async () =>{
+  const res = await getCategoryAPI()
+  console.log(res);
+  CategoryList.value = res.result
+  console.log(CategoryList.value);
+}
 
+onMounted(() =>{
+  getCategory()
+})
 </script>
 
 <template>
@@ -8,13 +20,10 @@
       <h1 class="logo">
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
-      <ul class="app-header-nav">
+      <ul class="app-header-nav" v-for="item in CategoryList" :key="item.id">
         <li class="home">
-          <RouterLink to="/">首页</RouterLink>
+          <RouterLink to="/">{{ item.name}}</RouterLink>
         </li>
-        <li> <RouterLink to="/">居家</RouterLink> </li>
-        <li> <RouterLink to="/">美食</RouterLink> </li>
-        <li> <RouterLink to="/">服饰</RouterLink> </li>
       </ul>
       <div class="search">
         <i class="iconfont icon-search"></i>
@@ -45,19 +54,20 @@
       width: 100%;
       text-indent: -9999px;
       background: url('@/assets/images/logo.png') no-repeat center 18px / contain;
+      // background-color: #666;
     }
   }
 
   .app-header-nav {
-    width: 820px;
+    width: auto;
     display: flex;
-    padding-left: 40px;
+    padding-left: 35px;
     position: relative;
     z-index: 998;
   
     li {
-      margin-right: 40px;
-      width: 38px;
+      margin-right: 25px;
+      width: 35px;
       text-align: center;
   
       a {

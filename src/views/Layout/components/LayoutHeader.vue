@@ -1,17 +1,8 @@
 <script setup>
-import { getCategoryAPI } from '@/apis/layout'
-import { onMounted,ref } from 'vue';
-const CategoryList = ref([])
-const getCategory = async () =>{
-  const res = await getCategoryAPI()
-  console.log(res);
-  CategoryList.value = res.result
-  console.log(CategoryList.value);
-}
+import { useCategoryStore } from '@/stores/category';
+const categoryStore = useCategoryStore()
 
-onMounted(() =>{
-  getCategory()
-})
+
 </script>
 
 <template>
@@ -20,9 +11,9 @@ onMounted(() =>{
       <h1 class="logo">
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
-      <ul class="app-header-nav" v-for="item in CategoryList" :key="item.id">
-        <li class="home">
-          <RouterLink to="/">{{ item.name}}</RouterLink>
+      <ul class="app-header-nav">
+        <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
+          <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
       <div class="search">
@@ -30,7 +21,7 @@ onMounted(() =>{
         <input type="text" placeholder="搜一搜">
       </div>
       <!-- 头部购物车 -->
-      
+
     </div>
   </header>
 </template>
@@ -54,34 +45,33 @@ onMounted(() =>{
       width: 100%;
       text-indent: -9999px;
       background: url('@/assets/images/logo.png') no-repeat center 18px / contain;
-      // background-color: #666;
     }
   }
 
   .app-header-nav {
-    width: auto;
+    width: 820px;
     display: flex;
-    padding-left: 35px;
+    padding-left: 40px;
     position: relative;
     z-index: 998;
-  
+
     li {
-      margin-right: 25px;
-      width: 35px;
+      margin-right: 40px;
+      width: 38px;
       text-align: center;
-  
+
       a {
         font-size: 16px;
         line-height: 32px;
         height: 32px;
         display: inline-block;
-  
+
         &:hover {
           color: $xtxColor;
           border-bottom: 1px solid $xtxColor;
         }
       }
-  
+
       .active {
         color: $xtxColor;
         border-bottom: 1px solid $xtxColor;

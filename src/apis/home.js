@@ -7,3 +7,10 @@ export function getBannerAPI(){
     url: '/home/banner'
   })
 }
+
+// 获取新鲜好物
+export const getNewAPI = () =>{
+  return httpInstance({
+    url:'/home/new'
+  })
+}

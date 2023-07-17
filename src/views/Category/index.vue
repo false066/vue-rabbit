@@ -1,19 +1,32 @@
 <script setup>
 import { getCategoryAPI } from '@/apis/category.js';
-import { ref, onMounted} from 'vue'
+import { getBannerAPI } from '@/apis/home'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const categoryData = ref({})
 
-const getCategoryData = async() =>{
+const getCategoryData = async () => {
   const res = await getCategoryAPI(route.params.id)
   // console.log(res);
   categoryData.value = res.result
 }
 
-onMounted(() =>{
-  getCategoryData()
+const bannerList = ref([])
+
+const getBannerList = async () => {
+  const res = await getBannerAPI(
+    { distributionSite: '2' }
+  )
+  // console.log(res);
+  bannerList.value = res.result
+  // console.log(bannerList.value);
+}
+
+onMounted(() => {
+  getCategoryData(),
+    getBannerList()
 })
 </script>
 
@@ -27,12 +40,30 @@ onMounted(() =>{
           <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+      <!-- 轮播图 -->
+      <div class="home-banner">
+        <el-carousel height="500px">
+          <el-carousel-item v-for="item in bannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="">
+          </el-carousel-item>
+        </el-carousel>
+      </div>
     </div>
   </div>
 </template>
 
 
 <style scoped lang="scss">
+.home-banner {
+  width: 1240px;
+  height: 500px;
+  margin: 0 auto;
+
+  img {
+    width: 100%;
+    height: 500px;
+  }
+}
 .top-category {
   h3 {
     font-size: 28px;

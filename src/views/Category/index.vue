@@ -1,8 +1,9 @@
-<template>
-  <div>我是category页</div>
-</template>
+<script setup>
 
-<script  setup>
 </script>
-<style scoped lang='scss'>
-</style>
+
+<template>
+  <div class='top-category'>
+    我是分类
+  </div>
+</template>

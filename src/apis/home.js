@@ -14,3 +14,10 @@ export const getNewAPI = () =>{
     url:'/home/new'
   })
 }
+
+// 获取新鲜好物
+export const getHotAPI = () =>{
+  return httpInstance({
+    url:'/home/hot'
+  })
+}
